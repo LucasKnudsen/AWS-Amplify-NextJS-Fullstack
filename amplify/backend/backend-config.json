@@ -50,5 +50,11 @@
         }
       }
     }
+  },
+  "storage": {
+    "fullstackbucket": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

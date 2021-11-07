@@ -1,23 +1,21 @@
-import { Button, Container, Typography } from '@mui/material'
-import { Auth, API } from 'aws-amplify'
-import Link from 'next/link'
+import { CircularProgress, Container, Grid } from '@mui/material'
+import { API } from 'aws-amplify'
 import { useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
 import { ListPostsQuery, Post } from '../API'
 import PostPreview from '../components/PostPreview'
 
 import { listPosts } from '../graphql/queries'
-import { userState } from '../recoil/atoms'
 
 const Home = () => {
-  const user = useRecoilValue(userState)
   const [posts, setPosts] = useState<Post[]>([])
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     fetchPosts()
   }, [])
 
   const fetchPosts = async () => {
+    setLoading(true)
     try {
       const response = (await API.graphql({
         query: listPosts,
@@ -27,36 +25,27 @@ const Home = () => {
     } catch (error) {
       console.log(error)
     }
-  }
-
-  const handleSignOut = async () => {
-    try {
-      await Auth.signOut()
-      console.log('Success')
-    } catch (error) {
-      console.log(error)
-    }
+    setLoading(false)
   }
 
   return (
     <Container maxWidth='md'>
-      <Link href='/login'>
-        <a>
-          <Typography display='inline-block' variant='h1'>
-            Hello {user.username || 'World'}
-          </Typography>
-        </a>
-      </Link>
-
-      {user.username && (
-        <Button variant='contained' onClick={handleSignOut}>
-          Sign out
-        </Button>
+      {loading ? (
+        <Grid
+          container
+          minHeight={250}
+          alignItems='center'
+          justifyContent='center'
+        >
+          <CircularProgress color='warning' />
+        </Grid>
+      ) : (
+        <>
+          {posts.map((post) => (
+            <PostPreview key={post.id} post={post} />
+          ))}
+        </>
       )}
-
-      {posts.map((post) => (
-        <PostPreview key={post.id} post={post} />
-      ))}
     </Container>
   )
 }

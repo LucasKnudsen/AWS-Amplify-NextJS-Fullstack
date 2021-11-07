@@ -64,13 +64,7 @@ const Login = () => {
               id='username'
               variant='outlined'
               type='text'
-              {...register('username', {
-                required: { value: true, message: 'Please enter a username' },
-                minLength: {
-                  value: 3,
-                  message: 'Username must be between 3-16 characters',
-                },
-              })}
+              {...register('username')}
               error={Boolean(errors.username)}
               helperText={errors.username?.message}
             />
@@ -86,10 +80,7 @@ const Login = () => {
               type='password'
               autoComplete='new-password'
               variant='outlined'
-              {...register('password', {
-                required: { value: true, message: 'Please enter a password' },
-                minLength: { value: 8, message: 'Min length: 8' },
-              })}
+              {...register('password')}
               error={Boolean(errors.password)}
               helperText={errors.password?.message}
             />

@@ -1,6 +1,6 @@
 {
     "identityPoolName": "awsfullstacka956b66c_identitypool_a956b66c",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "awsfula956b66c",
     "userPoolName": "awsfullstacka956b66c_userpool_a956b66c",
     "autoVerifiedAttributes": [

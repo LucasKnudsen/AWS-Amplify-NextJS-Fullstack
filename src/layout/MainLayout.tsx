@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import { useSetRecoilState } from 'recoil'
 
 import { userState } from '../recoil/atoms'
+import Header from './Header'
 
 interface Props {
   children: React.ReactNode
@@ -40,7 +41,12 @@ const MainLayout: React.FC<Props> = ({ children }) => {
     return () => Hub.remove('auth', () => null)
   }
 
-  return <>{children}</>
+  return (
+    <>
+      <Header />
+      {children}
+    </>
+  )
 }
 
 export default MainLayout
